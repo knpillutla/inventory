@@ -1,7 +1,5 @@
 package com.example.inventory.exception;
 
-import com.example.inventory.dto.events.BaseEvent;
-
 import lombok.Data;
 
 @Data

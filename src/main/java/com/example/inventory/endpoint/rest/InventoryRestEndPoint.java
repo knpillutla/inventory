@@ -1,10 +1,7 @@
 package com.example.inventory.endpoint.rest;
 
 import java.io.IOException;
-import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -19,10 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.esotericsoftware.minlog.Log;
-import com.example.inventory.dto.events.InventoryCreationFailedEvent;
-import com.example.inventory.dto.requests.InventoryCreationRequestDTO;
 import com.example.inventory.dto.requests.InventoryAllocationRequestDTO;
+import com.example.inventory.dto.requests.InventoryCreationRequestDTO;
 import com.example.inventory.exception.InventoryException;
 import com.example.inventory.service.InventoryServiceByItem;
 

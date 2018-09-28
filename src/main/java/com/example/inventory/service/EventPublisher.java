@@ -7,8 +7,8 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
-import com.example.inventory.dto.events.BaseEvent;
 import com.example.inventory.streams.InventoryStreams;
+import com.example.util.dto.events.BaseEvent;
 
 import lombok.extern.slf4j.Slf4j;
 
