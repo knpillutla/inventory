@@ -5,6 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.example.wms</groupId>
 	<artifactId>inventory</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>inventory</name>
 	<description>Inventory Service</description>
@@ -49,29 +50,9 @@
 		</dependency>
 		<dependency>
 		    <groupId>com.example.wms</groupId>
-		    <artifactId>shipping-interfaces</artifactId>
+		    <artifactId>inventory-idd</artifactId>
 		    <version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-		    <groupId>com.example.wms</groupId>
-		    <artifactId>packing-interfaces</artifactId>
-		    <version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.example.wms</groupId>
-		    <artifactId>inventory-interfaces</artifactId>
-		    <version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.example.wms</groupId>
-		    <artifactId>picking-interfaces</artifactId>
-		    <version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.example.wms</groupId>
-		    <artifactId>customer-order-interfaces</artifactId>
-		    <version>0.0.1-SNAPSHOT</version>
-		</dependency>	
 		<dependency>
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
