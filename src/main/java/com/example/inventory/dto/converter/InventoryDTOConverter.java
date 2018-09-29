@@ -32,7 +32,7 @@ public class InventoryDTOConverter {
 					invnEntity.getOrderLineId(), invnEntity.getOrderLineNbr(), invnEntity.getBusName(),
 					invnEntity.getLocnNbr(), invnEntity.getBusUnit(), invnEntity.getLocnBrcd(),
 					invnEntity.getItemBrcd(), invnEntity.getQty(), invnEntity.getStatCode(), invnEntity.getIlpn(),
-					invnEntity.getBatchNbr(), invnEntity.getOrderNbr(), invnEntity.getPackageNbr(),
+					invnEntity.getOrderNbr(), invnEntity.getPackageNbr(),
 					invnEntity.getTransitContainerNbr(), invnEntity.getSource(), invnEntity.getTransactionName(),
 					invnEntity.getTrackByLPN(), invnEntity.getRefField1(), invnEntity.getRefField2(),
 					invnEntity.getUpdatedDttm(), invnEntity.getUpdatedBy(), invnEntity.getBatchNbr(),
