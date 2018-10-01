@@ -5,17 +5,23 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name="INVENTORY")
+@EntityListeners(AuditingEntityListener.class)
 public class Inventory  implements Serializable{
 	@Column(name="ID")
 	@Id
@@ -85,10 +91,12 @@ public class Inventory  implements Serializable{
 	@Column(name="HOST_NAME")
 	String hostName;
 
-	@Column(name="CREATED_DTTM")
-	Date createdDttm;
+    @CreatedDate
+	@Column(name="CREATED_DTTM", nullable = false, updatable = false)
+    Date createdDttm;
 	
-	@Column(name="UPDATED_DTTM")
+    @Column(name = "UPDATED_DTTM", nullable = false)
+    @LastModifiedDate
 	Date updatedDttm;
 	
 	@Column(name="CREATED_BY")
