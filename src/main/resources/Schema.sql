@@ -25,7 +25,8 @@ CREATE TABLE INVENTORY
     CREATED_DTTM  timestamp not null default NOW(),
     UPDATED_DTTM  timestamp not null default NOW(),
     CREATED_BY character varying(25),
-    UPDATED_BY character varying(25)
+    UPDATED_BY character varying(25),
+    VERSION INTEGER
 );
 
 
