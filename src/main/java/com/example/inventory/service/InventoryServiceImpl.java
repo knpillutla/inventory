@@ -62,7 +62,6 @@ public abstract class InventoryServiceImpl implements InventoryService {
 				invn.setOrderNbr(invnAllocationReq.getOrderNbr());
 				invn.setBatchNbr(invnAllocationReq.getBatchNbr());
 				invn.setItemBrcd(invnAllocationReq.getItemBrcd());
-				invn.setUpdatedDttm(new java.util.Date());
 				invn.setStatCode(InventoryStatus.ALLOCATED.getStatCode());
 				InventoryDTO inventoryDTO = inventoryDTOConverter.getInventoryDTO(inventoryDAO.save(invn));
 				invnDTOList.add(inventoryDTO);

@@ -45,9 +45,6 @@ public class InventoryServiceByItem extends InventoryServiceImpl {
 				invn.setLocnNbr(invn.getLocnNbr());
 				invn.setIlpn(invn.getIlpn());
 				invn.setPackageNbr(invn.getPackageNbr());
-				
-				Date creationDate = new Date();
-				newInventory.setCreatedDttm(creationDate);
 				reservedEntityList.add(newInventory);
 						
 				// update available qty for the current locn/item
