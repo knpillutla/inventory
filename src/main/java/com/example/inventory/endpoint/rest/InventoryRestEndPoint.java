@@ -1,6 +1,7 @@
 package com.example.inventory.endpoint.rest;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -65,7 +66,7 @@ public class InventoryRestEndPoint {
 	@PutMapping("/{locnNbr}/inventory")
 	public ResponseEntity createInventory(@PathVariable("locnNbr") Integer locnNbr, @RequestBody InventoryCreationRequestDTO invnCreationReq) throws IOException {
 		long startTime = System.currentTimeMillis();
-		log.info("Received Inventory Create request for : " + invnCreationReq.toString() + ": at :" + new java.util.Date());
+		log.info("Received Inventory Create request for : " + invnCreationReq.toString() + ": at :" + LocalDateTime.now());
 		ResponseEntity resEntity = null;
 		try {
 			resEntity = ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(invnService.createInventory(invnCreationReq));
@@ -74,7 +75,7 @@ public class InventoryRestEndPoint {
 			resEntity = ResponseEntity.badRequest().body(ex.getEvent());
 		}
 		long endTime = System.currentTimeMillis();
-		log.info("Completed Inventory Create request for : " + invnCreationReq.toString() + ": at :" + new java.util.Date() + " : total time:" + (endTime-startTime)/1000.00 + " secs");
+		log.info("Completed Inventory Create request for : " + invnCreationReq.toString() + ": at :" + LocalDateTime.now() + " : total time:" + (endTime-startTime)/1000.00 + " secs");
 		return resEntity;
 	}	
 }

@@ -1,7 +1,5 @@
 package com.example.inventory.dto.converter;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Component;
 
 import com.example.inventory.db.Inventory;

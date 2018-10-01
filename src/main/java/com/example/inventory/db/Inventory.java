@@ -1,7 +1,7 @@
 package com.example.inventory.db;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -93,11 +93,11 @@ public class Inventory  implements Serializable{
 
     @CreatedDate
 	@Column(name="CREATED_DTTM", nullable = false, updatable = false)
-    Date createdDttm;
+    LocalDateTime createdDttm;
 	
     @Column(name = "UPDATED_DTTM", nullable = false)
     @LastModifiedDate
-	Date updatedDttm;
+	LocalDateTime updatedDttm;
 	
 	@Column(name="CREATED_BY")
 	String createdBy;
