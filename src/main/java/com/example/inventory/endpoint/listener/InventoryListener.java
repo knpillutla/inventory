@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 
-import com.example.inventory.dto.converter.ASNUPCToInventoryConverter;
+import com.example.inventory.dto.converter.UPCReceivedEventToInventoryConverter;
 import com.example.inventory.dto.converter.OrderToInventoryDTOConverter;
-import com.example.inventory.dto.events.ASNUPCReceivedEvent;
+import com.example.inventory.dto.events.UPCReceivedEvent;
 import com.example.inventory.dto.requests.InventoryAllocationRequestDTO;
 import com.example.inventory.service.InventoryService;
 import com.example.inventory.streams.InventoryStreams;
@@ -44,19 +44,20 @@ public class InventoryListener {
 				+ LocalDateTime.now() + " : total time:" + (endTime - startTime) / 1000.00 + " secs");
 	}
 
-	@StreamListener(target=InventoryStreams.INVENTORY_INPUT,condition = "headers['eventName']=='ASNUPCReceivedEvent'")
-	public void handleUPCReceipt(ASNUPCReceivedEvent upcReceivedEvent) {
-		log.info("ASNUPC Received: {}" + ": at :" + LocalDateTime.now(),
+	@StreamListener(target=InventoryStreams.INVENTORY_INPUT,condition = "headers['eventName']=='UPCReceivedEvent'")
+	//@StreamListener(target=InventoryStreams.INVENTORY_INPUT)
+	public void handleUPCReceipt(UPCReceivedEvent upcReceivedEvent) {
+		log.info("Started Processing UPCReceivedEvent : {}" + ": at :" + LocalDateTime.now(),
 				upcReceivedEvent);
 		long startTime = System.currentTimeMillis();
 		try {
-			inventoryService.createInventory(ASNUPCToInventoryConverter.getInventoryCreationRequestDTO(upcReceivedEvent));
+			inventoryService.createInventory(UPCReceivedEventToInventoryConverter.getInventoryCreationRequestDTO(upcReceivedEvent));
 			long endTime = System.currentTimeMillis();
-			log.info("Completed ASNUPC for : " + upcReceivedEvent + ": at :"
+			log.info("Completed UPCReceivedEvent Processing for : " + upcReceivedEvent + ": at :"
 					+ LocalDateTime.now() + " : total time:" + (endTime - startTime) / 1000.00 + " secs");
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error("Error Completing ASNUPC for : " + upcReceivedEvent + ", Error:" + e.getMessage(), e);
+			log.error("Error Completing UPCReceivedEvent Processing for : " + upcReceivedEvent + ", Error:" + e.getMessage(), e);
 		}
 	}
 /*
