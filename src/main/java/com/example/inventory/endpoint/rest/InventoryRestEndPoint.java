@@ -31,15 +31,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InventoryRestEndPoint {
 
-    @Value("${message: Inventory Service - Config Server is not working..pelase check}")
-    private String msg;
-    
     @Autowired
     InventoryServiceByItem invnService;
 	
-	@GetMapping("/")
-	public ResponseEntity hello() throws Exception {
-		return ResponseEntity.ok(msg);
+    @Value("${wms.service.health.msg: Inventory Service - Config Server is not working..please check}")
+    private String healthMsg;
+    
+    @Value("${wms.service.ready.msg: Inventory Service - Not ready yet}")
+    private String readyMsg;
+
+	@GetMapping("/ready")
+	public ResponseEntity ready() throws Exception {
+		return ResponseEntity.ok(readyMsg);
+	}
+	
+	@GetMapping("/health")
+	public ResponseEntity health() throws Exception {
+		return ResponseEntity.ok(healthMsg);
 	}
 	
 	@GetMapping("/{locnNbr}/inventory/{id}")
