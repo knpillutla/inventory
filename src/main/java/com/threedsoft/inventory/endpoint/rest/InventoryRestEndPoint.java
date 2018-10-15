@@ -1,4 +1,4 @@
-package com.example.inventory.endpoint.rest;
+package com.threedsoft.inventory.endpoint.rest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.inventory.dto.requests.InventoryAllocationRequestDTO;
-import com.example.inventory.dto.requests.InventoryCreationRequestDTO;
-import com.example.inventory.exception.InventoryException;
-import com.example.inventory.service.InventoryServiceByItem;
+import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
+import com.threedsoft.inventory.dto.requests.InventoryCreationRequestDTO;
+import com.threedsoft.inventory.exception.InventoryException;
+import com.threedsoft.inventory.service.InventoryServiceByItem;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

@@ -1,13 +1,13 @@
-package com.example.inventory.exception;
+package com.threedsoft.inventory.exception;
 
-import com.example.util.dto.events.BaseEvent;
-import com.example.util.dto.events.ExceptionEvent;
+import com.threedsoft.util.dto.events.ExceptionEvent;
+import com.threedsoft.util.dto.events.WMSEvent;
 
 import lombok.Data;
 
 @Data
 public class InventoryException extends Exception{
-	BaseEvent event = null;
+	WMSEvent event = null;
 	public InventoryException(ExceptionEvent event) {
 		super(event.getErrorMsg());
 		this.event = event;

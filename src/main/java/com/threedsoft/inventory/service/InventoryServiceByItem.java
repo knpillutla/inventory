@@ -1,4 +1,4 @@
-package com.example.inventory.service;
+package com.threedsoft.inventory.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.example.inventory.db.Inventory;
-import com.example.inventory.dto.requests.InventoryAllocationRequestDTO;
-import com.example.inventory.exception.InsufficientInventoryException;
+import com.threedsoft.inventory.db.Inventory;
+import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
+import com.threedsoft.inventory.exception.InsufficientInventoryException;
 
 import lombok.extern.slf4j.Slf4j;
 

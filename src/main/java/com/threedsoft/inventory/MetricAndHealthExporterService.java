@@ -1,4 +1,4 @@
-package com.example.inventory;
+package com.threedsoft.inventory;
 
 import static net.logstash.logback.marker.Markers.append;
 

@@ -1,4 +1,4 @@
-package com.example.inventory;
+package com.threedsoft.inventory;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

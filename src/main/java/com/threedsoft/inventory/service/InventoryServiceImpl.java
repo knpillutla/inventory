@@ -1,4 +1,4 @@
-package com.example.inventory.service;
+package com.threedsoft.inventory.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,19 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.inventory.db.Inventory;
-import com.example.inventory.db.InventoryRepository;
-import com.example.inventory.dto.converter.InventoryDTOConverter;
-import com.example.inventory.dto.events.InSufficientInventoryEvent;
-import com.example.inventory.dto.events.InventoryAllocatedEvent;
-import com.example.inventory.dto.events.InventoryAllocationFailedEvent;
-import com.example.inventory.dto.events.InventoryCreatedEvent;
-import com.example.inventory.dto.events.InventoryCreationFailedEvent;
-import com.example.inventory.dto.requests.InventoryAllocationRequestDTO;
-import com.example.inventory.dto.requests.InventoryCreationRequestDTO;
-import com.example.inventory.dto.responses.InventoryDTO;
-import com.example.inventory.exception.InventoryException;
-import com.example.util.service.EventPublisher;
+import com.threedsoft.inventory.db.Inventory;
+import com.threedsoft.inventory.db.InventoryRepository;
+import com.threedsoft.inventory.dto.converter.InventoryDTOConverter;
+import com.threedsoft.inventory.dto.events.InSufficientInventoryEvent;
+import com.threedsoft.inventory.dto.events.InventoryAllocatedEvent;
+import com.threedsoft.inventory.dto.events.InventoryAllocationFailedEvent;
+import com.threedsoft.inventory.dto.events.InventoryCreatedEvent;
+import com.threedsoft.inventory.dto.events.InventoryCreationFailedEvent;
+import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
+import com.threedsoft.inventory.dto.requests.InventoryCreationRequestDTO;
+import com.threedsoft.inventory.dto.responses.InventoryResourceDTO;
+import com.threedsoft.inventory.exception.InventoryException;
+import com.threedsoft.inventory.util.InventoryConstants;
+import com.threedsoft.util.service.EventPublisher;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,9 +51,9 @@ public abstract class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	@Transactional
-	public List<InventoryDTO> allocateInventory(InventoryAllocationRequestDTO invnAllocationReq)
+	public List<InventoryResourceDTO> allocateInventory(InventoryAllocationRequestDTO invnAllocationReq)
 			throws InventoryException {
-		List<InventoryDTO> invnDTOList = new ArrayList();
+		List<InventoryResourceDTO> invnDTOList = new ArrayList();
 		try {
 			List<Inventory> invnList = this.getInventoryToBeAllocated(invnAllocationReq);
 			for (Inventory invn : invnList) {
@@ -63,18 +64,18 @@ public abstract class InventoryServiceImpl implements InventoryService {
 				invn.setBatchNbr(invnAllocationReq.getBatchNbr());
 				invn.setItemBrcd(invnAllocationReq.getItemBrcd());
 				invn.setStatCode(InventoryStatus.ALLOCATED.getStatCode());
-				InventoryDTO inventoryDTO = inventoryDTOConverter.getInventoryDTO(inventoryDAO.save(invn));
+				InventoryResourceDTO inventoryDTO = inventoryDTOConverter.getInventoryDTO(inventoryDAO.save(invn));
 				invnDTOList.add(inventoryDTO);
-				eventPublisher.publish(new InventoryAllocatedEvent(inventoryDTO));
+				eventPublisher.publish(new InventoryAllocatedEvent(inventoryDTO,InventoryConstants.INVENTORY_SERVICE_NAME));
 			}
 		} catch (InventoryException ex) {
-			InSufficientInventoryEvent event = new InSufficientInventoryEvent(invnAllocationReq,
-					"Insufficient Inventory for Allocation Error:" + ex.getMessage());
+			InSufficientInventoryEvent event = new InSufficientInventoryEvent(invnAllocationReq, InventoryConstants.INVENTORY_SERVICE_NAME,
+					"Insufficient Inventory for Allocation Error:" + ex.getMessage(), ex);
 			InventoryException invException = new InventoryException(event);
 			eventPublisher.publish(event);
 			throw invException;
 		} catch (Exception ex) {
-			InventoryAllocationFailedEvent event = new InventoryAllocationFailedEvent(invnAllocationReq,
+			InventoryAllocationFailedEvent event = new InventoryAllocationFailedEvent(invnAllocationReq,InventoryConstants.INVENTORY_SERVICE_NAME,
 					"Inventory Allocation Error:" + ex.getMessage());
 			InventoryException invException = new InventoryException(event);
 			eventPublisher.publish(event);
@@ -96,8 +97,8 @@ public abstract class InventoryServiceImpl implements InventoryService {
 	 */
 	@Override
 	@Transactional
-	public InventoryDTO createInventory(InventoryCreationRequestDTO invnCreationReq) throws InventoryException {
-		InventoryDTO inventoryDTO = null;
+	public InventoryResourceDTO createInventory(InventoryCreationRequestDTO invnCreationReq) throws InventoryException {
+		InventoryResourceDTO inventoryDTO = null;
 		try {
 			Inventory newInventory = inventoryDTOConverter.getInventoryEntity(invnCreationReq);
 			newInventory.setStatCode(invnCreationReq.isLocked() ? InventoryStatus.LOCKED.getStatCode()
@@ -106,19 +107,19 @@ public abstract class InventoryServiceImpl implements InventoryService {
 			inventoryDTO = inventoryDTOConverter.getInventoryDTO(savedInventoryObj);
 		} catch (Exception ex) {
 			log.error("Inventory Creation Error:" + ex.getMessage(), ex);
-			InventoryCreationFailedEvent event = new InventoryCreationFailedEvent(invnCreationReq,
+			InventoryCreationFailedEvent event = new InventoryCreationFailedEvent(invnCreationReq,InventoryConstants.INVENTORY_SERVICE_NAME,
 					"Inventory Creation Error:" + ex.getMessage());
 			InventoryException invException = new InventoryException(event);
 			eventPublisher.publish(event);
 			throw invException;
 
 		}
-		eventPublisher.publish(new InventoryCreatedEvent(inventoryDTO));
+		eventPublisher.publish(new InventoryCreatedEvent(inventoryDTO,InventoryConstants.INVENTORY_SERVICE_NAME));
 		return inventoryDTO;
 	}
 
 	@Override
-	public InventoryDTO findById(Integer locnNbr, Long id) throws Exception {
+	public InventoryResourceDTO findById(Integer locnNbr, Long id) throws Exception {
 		Inventory invnEntity = inventoryDAO.findById(locnNbr, (long) id);
 		return inventoryDTOConverter.getInventoryDTO(invnEntity);
 	}

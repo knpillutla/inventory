@@ -1,4 +1,4 @@
-package com.example.inventory;
+package com.threedsoft.inventory;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;

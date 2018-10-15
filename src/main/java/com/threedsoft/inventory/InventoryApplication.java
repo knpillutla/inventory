@@ -1,4 +1,4 @@
-package com.example.inventory;
+package com.threedsoft.inventory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -11,8 +11,8 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import com.example.inventory.streams.InventoryStreams;
-import com.example.util.service.EventPublisher;
+import com.threedsoft.inventory.streams.InventoryStreams;
+import com.threedsoft.util.service.EventPublisher;
 
 import lombok.extern.slf4j.Slf4j;
 

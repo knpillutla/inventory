@@ -1,4 +1,4 @@
-package com.example.inventory.db;
+package com.threedsoft.inventory.db;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -33,6 +33,12 @@ public class Inventory  implements Serializable{
 
 	@Column(name="LOCN_NBR")
 	Integer locnNbr;
+
+	@Column(name="COMPANY")
+	String company;
+
+	@Column(name="DIVISION")
+	String division;
 
 	@Column(name="BUS_UNIT")
 	String busUnit;

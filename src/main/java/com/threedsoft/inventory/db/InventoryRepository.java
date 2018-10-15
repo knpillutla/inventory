@@ -1,4 +1,4 @@
-package com.example.inventory.db;
+package com.threedsoft.inventory.db;
 
 import java.util.List;
 

@@ -1,14 +1,15 @@
-package com.example.inventory.dto.converter;
+package com.threedsoft.inventory.dto.converter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.example.inventory.dto.requests.InventoryAllocationRequestDTO;
-import com.example.order.dto.events.OrderPlannedEvent;
-import com.example.order.dto.responses.OrderDTO;
-import com.example.order.dto.responses.OrderLineDTO;
+import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
+import com.threedsoft.order.dto.events.OrderPlannedEvent;
+import com.threedsoft.order.dto.responses.OrderLineResourceDTO;
+import com.threedsoft.order.dto.responses.OrderResourceDTO;
+import com.threedsoft.util.dto.events.EventResourceConverter;
 
 @Component
 public class OrderToInventoryDTOConverter {
@@ -16,9 +17,10 @@ public class OrderToInventoryDTOConverter {
 	public List<InventoryAllocationRequestDTO> createInvAllocReq(OrderPlannedEvent orderPlannedEvent) {
 		//ObjectMapper mapper = new ObjectMapper();
 		//OrderDTO orderDTO = mapper.convertValue(orderCreatedEvent.getRequestObj(), OrderDTO.class);
-		OrderDTO orderDTO = orderPlannedEvent.getOrderDTO();
+		OrderResourceDTO orderDTO = (OrderResourceDTO) EventResourceConverter
+				.getObject(orderPlannedEvent.getEventResource(), orderPlannedEvent.getEventResourceClassName());
 		List<InventoryAllocationRequestDTO> invnResvReqList = new ArrayList();
-		for(OrderLineDTO orderLineDTO : orderDTO.getOrderLines()) {
+		for(OrderLineResourceDTO orderLineDTO : orderDTO.getOrderLines()) {
 			InventoryAllocationRequestDTO invAllocReqDTO = new InventoryAllocationRequestDTO();
 			invAllocReqDTO.setOrderLineId(orderLineDTO.getId());
 			invAllocReqDTO.setOrderId(orderDTO.getId());

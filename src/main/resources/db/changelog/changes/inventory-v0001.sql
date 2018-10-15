@@ -3,6 +3,8 @@ CREATE TABLE INVENTORY
     ID serial primary key,
     BUS_NAME character varying(50),
 	LOCN_NBR integer not null default 0,
+	COMPANY  character varying(15), -- is gift
+	DIVISION  character varying(10), -- is gift
 	BUS_UNIT  character varying(3) NOT NULL,
     LOCN_BRCD character varying(25),
     LOCN_CLS character varying(1),

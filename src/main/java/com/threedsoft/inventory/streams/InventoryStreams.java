@@ -1,4 +1,4 @@
-package com.example.inventory.streams;
+package com.threedsoft.inventory.streams;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
