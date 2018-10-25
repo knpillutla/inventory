@@ -50,7 +50,7 @@ public class InventoryRestEndPoint {
 		return ResponseEntity.ok(healthMsg);
 	}
 	
-	@GetMapping("/{locnNbr}/inventory/{id}")
+	@GetMapping("/{busName}/{locnNbr}/inventory/{id}")
 	public ResponseEntity getById(@PathVariable("locnNbr") Integer locnNbr, @PathVariable("id") Long id) throws IOException {
 		try {
 			return ResponseEntity.ok(invnService.findById(locnNbr, id));
@@ -72,7 +72,7 @@ public class InventoryRestEndPoint {
 		}
 	}
 
-	@PostMapping("/{locnNbr}/picks/{id}")
+	@PostMapping("/{busName}/{locnNbr}/inventory/reserve/{id}")
 	public ResponseEntity reserveInventory(@PathVariable("locnNbr") Integer locnNbr, @RequestBody InventoryAllocationRequestDTO invnAllocationReq) throws IOException {
 		try {
 			return ResponseEntity.ok(invnService.allocateInventory(invnAllocationReq));
@@ -82,7 +82,7 @@ public class InventoryRestEndPoint {
 		} 
 	}	
 	
-	@PutMapping("/{locnNbr}/inventory")
+	@PutMapping("/{busName}/{locnNbr}/inventory")
 	public ResponseEntity createInventory(@PathVariable("locnNbr") Integer locnNbr, @RequestBody InventoryCreationRequestDTO invnCreationReq) throws IOException {
 		long startTime = System.currentTimeMillis();
 		log.info("Received Inventory Create request for : " + invnCreationReq.toString() + ": at :" + LocalDateTime.now());
