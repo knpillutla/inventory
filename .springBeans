@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:com.threedsoft.inventory.InventoryApplication</config>
+		<config>java:com.threedsoft.user.InventoryApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

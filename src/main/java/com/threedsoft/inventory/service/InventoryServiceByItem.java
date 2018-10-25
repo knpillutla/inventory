@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.threedsoft.inventory.db.Inventory;
 import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
+import com.threedsoft.inventory.dto.responses.InventoryResourceDTO;
 import com.threedsoft.inventory.exception.InsufficientInventoryException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,5 +62,15 @@ public class InventoryServiceByItem extends InventoryServiceImpl {
 			throw new InsufficientInventoryException("Not Enough Quantity To Reserve for Item:" + invnAllocationRequest.toString());
 		}
 		return reservedEntityList;
+	}
+
+	public List<InventoryResourceDTO> findByBusNameAndLocnNbr(String busName, Integer locnNbr) {
+		PageRequest pageRequest = new PageRequest(0, 20);
+		List<Inventory> invnEntityList = inventoryDAO.findByBusNameAndLocnNbr(busName, locnNbr, pageRequest);
+		List<InventoryResourceDTO> inventoryDTOList = new ArrayList();
+		for(Inventory invnEntity : invnEntityList) {
+			inventoryDTOList.add(inventoryDTOConverter.getInventoryDTO(invnEntity));
+		}
+		return inventoryDTOList;
 	}
 }

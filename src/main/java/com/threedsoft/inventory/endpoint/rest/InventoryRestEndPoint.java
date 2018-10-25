@@ -61,6 +61,17 @@ public class InventoryRestEndPoint {
 		}
 	}
 
+	@GetMapping("/{busName}/{locnNbr}/inventory")
+	public ResponseEntity getInventoryList(@PathVariable("busName") String busName, @PathVariable("locnNbr") Integer locnNbr) throws IOException {
+		try {
+			return ResponseEntity.ok(invnService.findByBusNameAndLocnNbr(busName, locnNbr));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(new ErrorRestResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error occured while getting next pick task"));
+		}
+	}
+
 	@PostMapping("/{locnNbr}/picks/{id}")
 	public ResponseEntity reserveInventory(@PathVariable("locnNbr") Integer locnNbr, @RequestBody InventoryAllocationRequestDTO invnAllocationReq) throws IOException {
 		try {
