@@ -18,6 +18,7 @@ CREATE TABLE INVENTORY
     ORDER_LINE_NBR integer,
     ORDER_ID integer,
     ORDER_LINE_ID integer,
+    LOCKED character varying(1),
 	TRANSIT_CONTAINER_NBR  character varying(50),
 	SOURCE character varying(50),
 	TRANSACTION_NAME character varying(50),
@@ -29,7 +30,7 @@ CREATE TABLE INVENTORY
     UPDATED_DTTM  timestamp not null default NOW(),
     CREATED_BY character varying(25),
     UPDATED_BY character varying(25),
-    VERSION INTEGER
+     VERSION INTEGER
 );
 
 

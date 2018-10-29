@@ -17,10 +17,11 @@ public class InventoryDTOConverter {
 		inventoryEntity.setLocnBrcd(invnCreationReq.getLocnBrcd());
 		inventoryEntity.setItemBrcd(invnCreationReq.getItemBrcd());
 		inventoryEntity.setIlpn(invnCreationReq.getIlpn());
-		inventoryEntity.setTrackByLPN(invnCreationReq.isTrackByLPN() ? "Y" : "N");
-		inventoryEntity.setQty(invnCreationReq.isTrackByLPN() ? 1 : invnCreationReq.getQty());
+		inventoryEntity.setTrackByLPN(invnCreationReq.getTrackByLPN());
+		inventoryEntity.setQty(invnCreationReq.getTrackByLPN().trim().equalsIgnoreCase("Y")?1:invnCreationReq.getQty());
 		inventoryEntity.setCreatedBy(invnCreationReq.getUserId());
 		inventoryEntity.setUpdatedBy(invnCreationReq.getUserId());
+		inventoryEntity.setLocked(invnCreationReq.getLocked());
 		return inventoryEntity;
 	}
 

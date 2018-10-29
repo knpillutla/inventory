@@ -2,6 +2,7 @@ package com.threedsoft.inventory.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.threedsoft.inventory.db.Inventory;
 import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
+import com.threedsoft.inventory.dto.requests.InventoryUpdateRequestDTO;
 import com.threedsoft.inventory.dto.responses.InventoryResourceDTO;
 import com.threedsoft.inventory.exception.InsufficientInventoryException;
+import com.threedsoft.inventory.exception.InventoryException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,5 +75,33 @@ public class InventoryServiceByItem extends InventoryServiceImpl {
 			inventoryDTOList.add(inventoryDTOConverter.getInventoryDTO(invnEntity));
 		}
 		return inventoryDTOList;
+	}
+
+	@Override
+	public InventoryResourceDTO updateInventory(InventoryUpdateRequestDTO invnUpdateReq) throws InventoryException{
+		Optional<Inventory> optionalInventoryEntity = inventoryDAO.findById(invnUpdateReq.getId());
+		if(optionalInventoryEntity.isPresent()) {
+			Inventory invnEntity = optionalInventoryEntity.get();
+			invnEntity.setLocnBrcd(invnUpdateReq.getLocnBrcd());
+			invnEntity.setItemBrcd(invnUpdateReq.getItemBrcd());
+			invnEntity.setQty(invnUpdateReq.getQty());
+			invnEntity.setIlpn(invnUpdateReq.getIlpn());
+			invnEntity.setTrackByLPN(invnUpdateReq.getTrackByLPN());
+			invnEntity.setLocked(invnUpdateReq.getLocked());
+			Inventory savedInvnEntity = inventoryDAO.save(invnEntity);
+			return inventoryDTOConverter.getInventoryDTO(savedInvnEntity);
+		}
+		return null;
+	}
+
+	@Override
+	public InventoryResourceDTO deleteInventory(Long id) throws InventoryException{
+		Optional<Inventory> optionalInventoryEntity = inventoryDAO.findById(id);
+		if(optionalInventoryEntity.isPresent()) {
+			Inventory invnEntity = optionalInventoryEntity.get();
+			inventoryDAO.delete(invnEntity);
+			return inventoryDTOConverter.getInventoryDTO(invnEntity);
+		}
+		return null;
 	}
 }

@@ -79,6 +79,9 @@ public class Inventory  implements Serializable{
 	@Column(name="TRANSIT_CONTAINER_NBR")
 	String transitContainerNbr;
 
+	@Column(name="LOCKED")
+	String locked;
+
 	@Column(name="SOURCE")
 	String source;
 

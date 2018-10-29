@@ -101,7 +101,7 @@ public abstract class InventoryServiceImpl implements InventoryService {
 		InventoryResourceDTO inventoryDTO = null;
 		try {
 			Inventory newInventory = inventoryDTOConverter.getInventoryEntity(invnCreationReq);
-			newInventory.setStatCode(invnCreationReq.isLocked() ? InventoryStatus.LOCKED.getStatCode()
+			newInventory.setStatCode(invnCreationReq.getLocked()!=null && invnCreationReq.getLocked().trim().equals("Y") ? InventoryStatus.LOCKED.getStatCode()
 					: InventoryStatus.AVAILABLE.getStatCode());
 			Inventory savedInventoryObj = inventoryDAO.save(newInventory);
 			inventoryDTO = inventoryDTOConverter.getInventoryDTO(savedInventoryObj);

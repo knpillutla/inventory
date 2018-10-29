@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
 import com.threedsoft.inventory.dto.requests.InventoryCreationRequestDTO;
+import com.threedsoft.inventory.dto.requests.InventoryUpdateRequestDTO;
 import com.threedsoft.inventory.exception.InventoryException;
 import com.threedsoft.inventory.service.InventoryServiceByItem;
 
@@ -73,7 +75,7 @@ public class InventoryRestEndPoint {
 	}
 
 	@PostMapping("/{busName}/{locnNbr}/inventory/reserve/{id}")
-	public ResponseEntity reserveInventory(@PathVariable("locnNbr") Integer locnNbr, @RequestBody InventoryAllocationRequestDTO invnAllocationReq) throws IOException {
+	public ResponseEntity reserveInventory(@PathVariable("busName") String busName, @PathVariable("locnNbr") Integer locnNbr, @RequestBody InventoryAllocationRequestDTO invnAllocationReq) throws IOException {
 		try {
 			return ResponseEntity.ok(invnService.allocateInventory(invnAllocationReq));
 		}catch (InventoryException ex) {
@@ -82,7 +84,27 @@ public class InventoryRestEndPoint {
 		} 
 	}	
 	
-	@PutMapping("/{busName}/{locnNbr}/inventory")
+	@PostMapping("/{busName}/{locnNbr}/inventory/{id}")
+	public ResponseEntity updateInventory(@PathVariable("busName") String busName, @PathVariable("locnNbr") Integer locnNbr, @RequestBody InventoryUpdateRequestDTO invnUpdateReq) throws IOException {
+		try {
+			return ResponseEntity.ok(invnService.updateInventory(invnUpdateReq));
+		}catch (InventoryException ex) {
+			log.error("Inventory Update Error:", ex.getEvent(), ex);
+			return ResponseEntity.badRequest().body(new ErrorRestResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error occured while updating inventory:" + ex.getMessage()));
+		} 
+	}	
+
+	@DeleteMapping("/{busName}/{locnNbr}/inventory/{id}")
+	public ResponseEntity deleteInventory(@PathVariable("busName") String busName, @PathVariable("locnNbr") Integer locnNbr, @PathVariable("id") Long id) throws IOException {
+		try {
+			return ResponseEntity.ok(invnService.deleteInventory(id));
+		}catch (InventoryException ex) {
+			log.error("Inventory Update Error:", ex.getEvent(), ex);
+			return ResponseEntity.badRequest().body(new ErrorRestResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Error occured while updating inventory:" + ex.getMessage()));
+		} 
+	}	
+
+	@PostMapping("/{busName}/{locnNbr}/inventory")
 	public ResponseEntity createInventory(@PathVariable("locnNbr") Integer locnNbr, @RequestBody InventoryCreationRequestDTO invnCreationReq) throws IOException {
 		long startTime = System.currentTimeMillis();
 		log.info("Received Inventory Create request for : " + invnCreationReq.toString() + ": at :" + LocalDateTime.now());
