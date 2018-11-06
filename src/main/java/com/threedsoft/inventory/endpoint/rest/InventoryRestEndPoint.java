@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
 import com.threedsoft.inventory.dto.requests.InventoryCreationRequestDTO;
+import com.threedsoft.inventory.dto.requests.InventorySearchRequestDTO;
 import com.threedsoft.inventory.dto.requests.InventoryUpdateRequestDTO;
 import com.threedsoft.inventory.exception.InventoryException;
 import com.threedsoft.inventory.service.InventoryServiceByItem;
@@ -140,4 +141,26 @@ public class InventoryRestEndPoint {
 				+ LocalDateTime.now() + " : total time:" + (endTime - startTime) / 1000.00 + " secs");
 		return resEntity;
 	}
+	
+	@PostMapping("/{busName}/{locnNbr}/inventory/search")
+	public ResponseEntity searchInventory(@PathVariable("busName") String busName, @PathVariable("locnNbr") Integer locnNbr,
+			@RequestBody InventorySearchRequestDTO invnSearchReq) throws IOException {
+		long startTime = System.currentTimeMillis();
+		log.info("Received Inventory search request for : " + invnSearchReq.toString() + ": at :" + LocalDateTime.now());
+		ResponseEntity resEntity = null;
+		try {
+			resEntity = ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
+					.body(invnService.searchInventory(invnSearchReq));
+		} catch (Exception e) {
+			e.printStackTrace();
+			resEntity = ResponseEntity.badRequest()
+					.body(new ErrorResourceDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+							"Error occured while searching for inventory:" + e.getMessage(), invnSearchReq));
+		}
+		long endTime = System.currentTimeMillis();
+		log.info("Completed Inventory search request for : " + invnSearchReq.toString() + ": at :" + LocalDateTime.now()
+				+ " : total time:" + (endTime - startTime) / 1000.00 + " secs");
+		return resEntity;
+	}
+	
 }

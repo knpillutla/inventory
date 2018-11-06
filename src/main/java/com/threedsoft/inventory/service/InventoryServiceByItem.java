@@ -6,11 +6,14 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.threedsoft.inventory.db.Inventory;
 import com.threedsoft.inventory.dto.requests.InventoryAllocationRequestDTO;
+import com.threedsoft.inventory.dto.requests.InventorySearchRequestDTO;
 import com.threedsoft.inventory.dto.requests.InventoryUpdateRequestDTO;
 import com.threedsoft.inventory.dto.responses.InventoryResourceDTO;
 import com.threedsoft.inventory.exception.InsufficientInventoryException;
@@ -103,5 +106,16 @@ public class InventoryServiceByItem extends InventoryServiceImpl {
 			return inventoryDTOConverter.getInventoryDTO(invnEntity);
 		}
 		return null;
+	}
+
+	public Object searchInventory(InventorySearchRequestDTO invnSearchReq) {
+		PageRequest pageRequest = new PageRequest(0, 50);
+		Inventory searchInventory = inventoryDTOConverter.getInventoryEntityForSearch(invnSearchReq);
+		Page<Inventory> invnEntityPage = inventoryDAO.findAll(Example.of(searchInventory), pageRequest);
+		List<InventoryResourceDTO> inventoryDTOList = new ArrayList();
+		for(Inventory invnEntity : invnEntityPage) {
+			inventoryDTOList.add(inventoryDTOConverter.getInventoryDTO(invnEntity));
+		}
+		return inventoryDTOList;
 	}
 }

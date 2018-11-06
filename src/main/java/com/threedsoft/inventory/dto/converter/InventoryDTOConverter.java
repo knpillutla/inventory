@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.threedsoft.inventory.db.Inventory;
 import com.threedsoft.inventory.dto.requests.InventoryCreationRequestDTO;
+import com.threedsoft.inventory.dto.requests.InventorySearchRequestDTO;
 import com.threedsoft.inventory.dto.responses.InventoryResourceDTO;
 
 @Component
@@ -22,6 +23,21 @@ public class InventoryDTOConverter {
 		inventoryEntity.setCreatedBy(invnCreationReq.getUserId());
 		inventoryEntity.setUpdatedBy(invnCreationReq.getUserId());
 		inventoryEntity.setLocked(invnCreationReq.getLocked());
+		return inventoryEntity;
+	}
+
+	public Inventory getInventoryEntityForSearch(InventorySearchRequestDTO invnSearchReq) {
+		Inventory inventoryEntity = new Inventory();
+		inventoryEntity.setBusName(invnSearchReq.getBusName());
+		inventoryEntity.setLocnNbr(invnSearchReq.getLocnNbr());
+		inventoryEntity.setBusUnit(invnSearchReq.getBusUnit());
+		inventoryEntity.setLocnBrcd(invnSearchReq.getLocnBrcd());
+		inventoryEntity.setItemBrcd(invnSearchReq.getItemBrcd());
+		inventoryEntity.setIlpn(invnSearchReq.getIlpn());
+		inventoryEntity.setTrackByLPN(invnSearchReq.getTrackByLPN());
+		inventoryEntity.setQty(invnSearchReq.getQty());
+		inventoryEntity.setUpdatedBy(invnSearchReq.getUserId());
+		inventoryEntity.setLocked(invnSearchReq.getLocked());
 		return inventoryEntity;
 	}
 
