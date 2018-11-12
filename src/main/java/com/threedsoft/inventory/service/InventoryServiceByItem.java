@@ -108,7 +108,8 @@ public class InventoryServiceByItem extends InventoryServiceImpl {
 		return null;
 	}
 
-	public Object searchInventory(InventorySearchRequestDTO invnSearchReq) {
+	@Override
+	public List<InventoryResourceDTO> searchInventory(InventorySearchRequestDTO invnSearchReq) throws InventoryException{
 		PageRequest pageRequest = new PageRequest(0, 50);
 		Inventory searchInventory = inventoryDTOConverter.getInventoryEntityForSearch(invnSearchReq);
 		Page<Inventory> invnEntityPage = inventoryDAO.findAll(Example.of(searchInventory), pageRequest);
